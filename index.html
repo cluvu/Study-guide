@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Study Guide Access</title>
+  <script>
+    const scriptURL = "YOUR_WEB_APP_URL_HERE"; // paste your Apps Script URL
+
+    function checkKey() {
+      const key = document.getElementById('keyInput').value;
+      fetch(`${scriptURL}?key=${key}`)
+        .then(response => response.text())
+        .then(result => {
+          if(result === "valid"){
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+          } else if(result === "used"){
+            alert("This key has already been used.");
+          } else {
+            alert("Invalid key.");
+          }
+        })
+        .catch(err => alert("Error contacting server"));
+    }
+  </script>
+</head>
+<body>
+  <div id="login">
+    <h2>Enter Your Access Key:</h2>
+    <input type="text" id="keyInput">
+    <button onclick="checkKey()">Submit</button>
+  </div>
+
+  <div id="content" style="display:none;">
+    <h1>Welcome to the Study Guide!</h1>
+    <p>Here’s your Google Doc link:</p>
+    <a href="YOUR_GOOGLE_DOC_LINK_HERE" target="_blank">Open Study Guide</a>
+  </div>
+</body>
+</html>
